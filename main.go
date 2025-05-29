@@ -12,6 +12,8 @@ func main() {
 	initialize.InitializeConfig()
 	// 初始化日志
 	initialize.InitializeLog(*global.App.Config)
+	// 初始化redis
+	initialize.InitializeRedis()
 	// 初始化mysql
 	initialize.InitializeDB()
 	// 程序关闭前，释放数据库连接

@@ -1,6 +1,7 @@
 package initialize
 
 import (
+	"ai-ZhenLou/app/dao"
 	"ai-ZhenLou/app/handler"
 	"ai-ZhenLou/app/services"
 	"ai-ZhenLou/global"
@@ -17,8 +18,10 @@ import (
 
 func RunServer() {
 	r := gin.Default()
+	// 初始化dao
+	appDap := dao.NewDao()
 	// 初始化服务层
-	appServices := services.NewServices()
+	appServices := services.NewServices(appDap)
 	// 初始化控制器层
 	appHandler := handler.NewHandler(appServices)
 

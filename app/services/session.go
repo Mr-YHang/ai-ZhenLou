@@ -1,25 +1,32 @@
 package services
 
 import (
+	"ai-ZhenLou/app/dao"
+	"ai-ZhenLou/app/model"
 	"ai-ZhenLou/app/req"
-	"ai-ZhenLou/app/resp"
 	"ai-ZhenLou/global"
 	"context"
-	"errors"
 )
 
-type Session struct{}
-
-func NewSession() *Session {
-	return &Session{}
+type Session struct {
+	UserDao *dao.User
 }
 
-func (s *Session) Login(ctx context.Context, r *req.LoginReq) (*resp.LoginResp, error) {
-	// 这是一个模拟报错
-	err := errors.New("数据库查询失败")
+func NewSession(userDao *dao.User) *Session {
+	return &Session{
+		UserDao: userDao,
+	}
+}
 
-	// 打印日志
-	global.App.Log.Err(err).Any("user_name", r.Username).Msg("用户登录失败")
+func (s *Session) Login(ctx context.Context, r *req.LoginReq) (*model.User, error) {
+	// 模拟做个查询
+	userInfo, err := s.UserDao.FindUserByName(ctx, r.Username)
+	if err != nil {
+		// 打印日志
+		global.App.Log.Err(err).Any("user_name", r.Username).Msg("用户登录失败")
 
-	return nil, err
+		return nil, err
+	}
+
+	return userInfo, err
 }
