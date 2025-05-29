@@ -14,6 +14,13 @@ func InitializeDB() {
 	global.App.DB = initMySqlGorm(global.App.Config.OrderDB)
 }
 
+func CloseDB() {
+	if global.App.DB != nil {
+		db, _ := global.App.DB.DB()
+		db.Close()
+	}
+}
+
 // 初始化 mysql gorm.DB
 func initMySqlGorm(dbConfig config.DBConf) *gorm.DB {
 	if dbConfig.Database == "" {

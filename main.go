@@ -4,8 +4,6 @@ import (
 	"ai-ZhenLou/global"
 	"ai-ZhenLou/initialize"
 	"fmt"
-	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 func main() {
@@ -16,15 +14,11 @@ func main() {
 	initialize.InitializeLog(*global.App.Config)
 	// 初始化mysql
 	initialize.InitializeDB()
+	// 程序关闭前，释放数据库连接
+	defer func() {
+		initialize.CloseDB()
+	}()
 
-	r := gin.Default()
-
-	// 测试路由
-	r.GET("/ping", func(c *gin.Context) {
-		c.String(http.StatusOK, "pong")
-	})
-
-	// 启动服务器
-	r.Run(":" + global.App.Config.App.Port)
-
+	// 启动服务
+	initialize.RunServer()
 }
