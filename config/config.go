@@ -1,10 +1,9 @@
 package config
 
-var Conf = new(Config)
-
 type Config struct {
-	App App `mapstructure:"app" json:"app" yaml:"app"`
-	Log Log `mapstructure:"log" json:"log" yaml:"log"`
+	App     App    `mapstructure:"app" json:"app" yaml:"app"`
+	Log     Log    `mapstructure:"log" json:"log" yaml:"log"`
+	OrderDB DBConf `mapstructure:"order_db" json:"order_db" yaml:"order_db"`
 }
 
 type App struct {
@@ -21,4 +20,19 @@ type Log struct {
 	MaxSize    int    `mapstructure:"max_size" json:"max_size" yaml:"max_size"`          // 单文件最大M
 	Level      int    `mapstructure:"level" json:"level" yaml:"level"`                   // 等级
 	MaxBackups int    `mapstructure:"max_backups" json:"max_backups" yaml:"max_backups"` // 最大文件数
+}
+
+type DBConf struct {
+	Driver              string `mapstructure:"driver" json:"driver" yaml:"driver"`
+	Host                string `mapstructure:"host" json:"host" yaml:"host"`
+	Port                int    `mapstructure:"port" json:"port" yaml:"port"`
+	Database            string `mapstructure:"database" json:"database" yaml:"database"`
+	UserName            string `mapstructure:"username" json:"username" yaml:"username"`
+	Password            string `mapstructure:"password" json:"password" yaml:"password"`
+	Charset             string `mapstructure:"charset" json:"charset" yaml:"charset"`
+	MaxIdleConns        int    `mapstructure:"max_idle_conns" json:"max_idle_conns" yaml:"max_idle_conns"`
+	MaxOpenConns        int    `mapstructure:"max_open_conns" json:"max_open_conns" yaml:"max_open_conns"`
+	LogMode             string `mapstructure:"log_mode" json:"log_mode" yaml:"log_mode"`
+	EnableFileLogWriter bool   `mapstructure:"enable_file_log_writer" json:"enable_file_log_writer" yaml:"enable_file_log_writer"`
+	LogFilename         string `mapstructure:"log_filename" json:"log_filename" yaml:"log_filename"`
 }

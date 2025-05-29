@@ -2,6 +2,7 @@ package initialize
 
 import (
 	"ai-ZhenLou/config"
+	"ai-ZhenLou/global"
 	"fmt"
 	"github.com/rs/zerolog"
 	"github.com/rs/zerolog/pkgerrors"
@@ -12,9 +13,6 @@ import (
 	"runtime/debug"
 	"time"
 )
-
-// ZLog 全局日志记录器变量
-var ZLog zerolog.Logger
 
 func InitializeLog(config config.Config) {
 	// 设置错误堆栈的 marshaler 为 pkgerrors.MarshalStack
@@ -74,7 +72,7 @@ func InitializeLog(config config.Config) {
 	}
 
 	// 初始化全局日志记录器
-	ZLog = zerolog.New(mw).
+	global.App.Log = zerolog.New(mw).
 		Level(zerolog.Level(logLevel)). // 设置日志级别
 		With().
 		Str("git_revision", gitRevision).       // 添加 git 版本信息

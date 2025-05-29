@@ -1,7 +1,7 @@
 package initialize
 
 import (
-	"ai-ZhenLou/config"
+	"ai-ZhenLou/global"
 	"fmt"
 	"github.com/spf13/viper"
 )
@@ -17,7 +17,7 @@ func InitializeConfig() {
 		panic(fmt.Errorf("InitializeConfig -- 读取配置文件错误: %s \n", err.Error()))
 	}
 	// 将配置赋值给全局变量
-	if err := v.Unmarshal(&config.Conf); err != nil {
+	if err := v.Unmarshal(&global.App.Config); err != nil {
 		panic(fmt.Errorf("InitializeConfig -- 写入配置文件错误: %s \n", err.Error()))
 	}
 }

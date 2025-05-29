@@ -1,7 +1,7 @@
 package main
 
 import (
-	"ai-ZhenLou/config"
+	"ai-ZhenLou/global"
 	"ai-ZhenLou/initialize"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -13,7 +13,9 @@ func main() {
 	// 初始化配置
 	initialize.InitializeConfig()
 	// 初始化日志
-	initialize.InitializeLog(*config.Conf)
+	initialize.InitializeLog(*global.App.Config)
+	// 初始化mysql
+	initialize.InitializeDB()
 
 	r := gin.Default()
 
@@ -23,6 +25,6 @@ func main() {
 	})
 
 	// 启动服务器
-	r.Run(":" + config.Conf.App.Port)
+	r.Run(":" + global.App.Config.App.Port)
 
 }
