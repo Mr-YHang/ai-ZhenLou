@@ -12,6 +12,8 @@ func main() {
 	fmt.Println("开始搞起！")
 	// 初始化配置
 	initialize.InitializeConfig()
+	// 初始化日志
+	initialize.InitializeLog(*config.Conf)
 
 	r := gin.Default()
 
