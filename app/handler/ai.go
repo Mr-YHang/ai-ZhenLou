@@ -70,6 +70,7 @@ func (h *AI) Talk(c *gin.Context) {
 		resp.Fail(c, global.ProcessErrCode, err.Error())
 		return
 	}
+	
 	// step3. 构建本地大模型
 	chatModel, err := h.ChatModelSvc.LocalOllama(ctx)
 	if err != nil {
@@ -105,5 +106,5 @@ func (h *AI) Talk(c *gin.Context) {
 		return
 	}
 
-	resp.Success(c, outMessage.String())
+	resp.Success(c, outMessage.Content)
 }

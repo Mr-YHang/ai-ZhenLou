@@ -19,6 +19,7 @@ func (s *Prompt) GetTemplate(ctx context.Context, userRole int, ask string, hist
 	template := prompt.FromMessages(schema.FString,
 		schema.SystemMessage(common.InitTemplate),
 		schema.MessagesPlaceholder("history", false),
+		schema.UserMessage("问题: {ask}"),
 	)
 
 	info := map[string]any{

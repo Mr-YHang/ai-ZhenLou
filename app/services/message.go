@@ -3,6 +3,7 @@ package services
 import (
 	"ai-ZhenLou/app/dao"
 	"ai-ZhenLou/app/model"
+	"ai-ZhenLou/utils"
 	"context"
 	"errors"
 	"github.com/cloudwego/eino/schema"
@@ -53,13 +54,18 @@ func (s *Message) UpdMessageHistory(ctx context.Context, ack string, answer *sch
 		Role:    "user",
 		Content: ack,
 	}
+	// 这里需要截取一下回答，不用存思考
+	answerMessgae := &schema.Message{
+		Role:    answer.Role,
+		Content: utils.AnswerTrim(answer.Content),
+	}
 
 	// step2. 如果为空，则表示为新会话，插入
 	if history == nil {
 		info := &model.Message{
 			UserID:       userID,
 			DialogueID:   dialogueID,
-			DialogueInfo: []*schema.Message{ackMessage, answer},
+			DialogueInfo: []*schema.Message{ackMessage, answerMessgae},
 			CreateAt:     time.Now(),
 			UpdateAt:     time.Now(),
 		}
