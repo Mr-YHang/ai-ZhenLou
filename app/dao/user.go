@@ -19,7 +19,17 @@ func NewUser(dB *gorm.DB, redis *redis.Client) *User {
 func (d *User) FindUserByName(ctx context.Context, name string) (*model.User, error) {
 	res := &model.User{}
 
-	if err := d.DB.Where("user_name = ?", name).First(&res).Error; err != nil {
+	if err := d.DB.Table(new(model.User).TableName()).Where("user_name = ?", name).First(&res).Error; err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}
+
+func (d *User) FindUserByID(ctx context.Context, ID int64) (*model.User, error) {
+	res := &model.User{}
+
+	if err := d.DB.Table(new(model.User).TableName()).Where("id = ?", ID).First(&res).Error; err != nil {
 		return nil, err
 	}
 

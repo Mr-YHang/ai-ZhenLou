@@ -14,4 +14,7 @@ func Router(router *gin.Engine, h handler.Handler) {
 
 	user := router.Group("/user")
 	user.POST("/login", h.Session.Login)
+
+	ai := router.Group("/ai")
+	ai.POST("/ack", h.AI.Talk)
 }
