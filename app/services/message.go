@@ -55,7 +55,7 @@ func (s *Message) UpdMessageHistory(ctx context.Context, ack string, answer *sch
 		Content: ack,
 	}
 	// 这里需要截取一下回答，不用存思考
-	answerMessgae := &schema.Message{
+	answerMessage := &schema.Message{
 		Role:    answer.Role,
 		Content: utils.AnswerTrim(answer.Content),
 	}
@@ -65,7 +65,7 @@ func (s *Message) UpdMessageHistory(ctx context.Context, ack string, answer *sch
 		info := &model.Message{
 			UserID:       userID,
 			DialogueID:   dialogueID,
-			DialogueInfo: []*schema.Message{ackMessage, answerMessgae},
+			DialogueInfo: []*schema.Message{ackMessage, answerMessage},
 			CreateAt:     time.Now(),
 			UpdateAt:     time.Now(),
 		}
@@ -73,7 +73,7 @@ func (s *Message) UpdMessageHistory(ctx context.Context, ack string, answer *sch
 		return s.MessageDao.AddMessage(ctx, info)
 	}
 	// step3. 如果有历史会话，则需要整合
-	history = append(history, ackMessage, answer)
+	history = append(history, ackMessage, answerMessage)
 
 	return s.MessageDao.UpdMessageByUIDAndDID(ctx, userID, dialogueID, history)
 }

@@ -15,8 +15,8 @@ func NewChatModel() *ChatModel {
 
 func (s *ChatModel) LocalOllama(ctx context.Context) (*ollama.ChatModel, error) {
 	chatModel, err := ollama.NewChatModel(ctx, &ollama.ChatModelConfig{
-		BaseURL: "http://localhost:11434", // Ollama 服务地址
-		Model:   "qwen3:1.7b",             // 模型名称
+		BaseURL: "http://localhost:11434",       // Ollama 服务地址
+		Model:   "jaahas/qwen3-abliterated:14b", // 模型名称
 	})
 
 	if err != nil {

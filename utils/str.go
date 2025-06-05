@@ -5,10 +5,10 @@ import (
 )
 
 func AnswerTrim(str string) string {
-	startIndex := strings.Index(str, "</think>")
-	if startIndex == -1 {
+	strSlice := strings.Split(str, "</think>")
+	if len(strSlice) != 2 {
 		return str
 	}
 
-	return strings.TrimSpace(str[startIndex:])
+	return strings.ReplaceAll(strSlice[1], "\n", "")
 }
