@@ -25,3 +25,13 @@ func (d *User) FindUserByName(ctx context.Context, name string) (*model.User, er
 
 	return res, nil
 }
+
+func (d *User) FindUserByID(ctx context.Context, ID int64) (*model.User, error) {
+	res := &model.User{}
+
+	if err := d.DB.Where("id = ?", ID).First(&res).Error; err != nil {
+		return nil, err
+	}
+
+	return res, nil
+}

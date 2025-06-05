@@ -21,6 +21,9 @@ func main() {
 		initialize.CloseDB()
 	}()
 
+	// 启动mysql的mcp服务
+	initialize.MysqlMcpStart()
+
 	// 启动服务
 	initialize.RunServer()
 }
